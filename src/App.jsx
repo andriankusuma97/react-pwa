@@ -89,9 +89,9 @@ const PWATodoApp = () => {
   const totalCount = todos.length;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+    <div className="min-h-screen max-w-md mx-auto bg-gradient-to-br from-blue-50 to-indigo-100">
       {/* Header */}
-      <header className="bg-white shadow-lg">
+      <header className="bg-sky-300 shadow-lg">
         <div className="max-w-md mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
             <h1 className="text-2xl font-bold text-gray-800">PWA Todo</h1>
