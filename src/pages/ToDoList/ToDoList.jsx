@@ -11,7 +11,6 @@ const PWATodoApp = () => {
   const [newTodo, setNewTodo] = useState('');
   const { isOnline, isInstallable, installApp } = usePWA()  
    const navigate = useNavigate();
-
   // Load todos from localStorage on mount
   useEffect(() => {
     const savedTodos = localStorage.getItem('pwa-todos');
@@ -25,19 +24,7 @@ const PWATodoApp = () => {
     localStorage.setItem('pwa-todos', JSON.stringify(todos));
   }, [todos]);
 
-  // Handle online/offline status
-  useEffect(() => {
-    const handleOnline = () => setIsOnline(true);
-    const handleOffline = () => setIsOnline(false);
-
-    window.addEventListener('online', handleOnline);
-    window.addEventListener('offline', handleOffline);
-
-    return () => {
-      window.removeEventListener('online', handleOnline);
-      window.removeEventListener('offline', handleOffline);
-    };
-  }, []);
+ 
 
   const addTodo = (e) => {
     e.preventDefault();
@@ -69,10 +56,10 @@ const PWATodoApp = () => {
   const totalCount = todos.length;
 
   return (
-    <div className="min-h-screen max-w-md mx-auto bg-gradient-to-br from-blue-50 to-indigo-100">
+    <div className="min-h-screen  bg-gradient-to-br from-blue-50 to-indigo-100 shadow-2xl">
       {/* Header */}
       <header className="bg-sky-300 shadow-lg">
-        <div className="max-w-md mx-auto px-4 py-6">
+        <div className="mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
             <div className='flex items-center '>
               <FiChevronLeft size={24} className='mr-4' onClick={()=> navigate(-1)} />

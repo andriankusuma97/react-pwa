@@ -15,6 +15,8 @@ export const usePWA = () => {
       e.preventDefault()
       setInstallPrompt(e)
       setIsInstallable(true)
+      console.log(isInstallable,"<<<<<ini");
+      
     }
 
     // Handle app installed
