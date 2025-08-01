@@ -1,42 +1,143 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background: #fff;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.app {
+  padding: 24px;
+  max-width: 480px;
+  margin: auto;
+  overflow-x: hidden;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+header h1 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: bold;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+header p {
+  margin: 0px 0 24px;
+  color: #777;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  border: 2px solid #000;
+  border-radius: 12px;
+  padding: 8px 12px;
+  margin-bottom: 16px;
+  box-shadow: 4px 4px 0 #000;
+}
+
+.search-box input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding-left: 8px;
+  font-size: 16px;
+}
+
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.tab-btn {
+  min-width: 100px;
+  flex-shrink: 0;
+  border: 2px solid #000;
+  border-radius: 12px;
+  padding: 8px;
+  background: white;
+  cursor: pointer;
+  font-weight: bold;
+  white-space: nowrap;
+  box-shadow: 4px 4px 0 #000;
+}
+
+.tab-btn.active {
+  background: #3fc0e4;
+  box-shadow: 4px 4px 0 #000;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 16px;
+  margin-top: 36px;
 }
 
 .card {
-  padding: 2em;
+  border: 2px solid #000;
+  border-radius: 12px;
+  padding: 16px 8px;
+  text-align: center;
+  box-shadow: 4px 4px 0 #000;
+  background: white;
 }
 
-.read-the-docs {
-  color: #888;
+.card .icon {
+  font-size: 32px;
+}
+
+.card .title {
+  font-weight: bold;
+  margin: 8px 0 4px;
+}
+
+.card .subtitle {
+  font-size: 12px;
+  color: #777;
+}
+
+.search-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border: 2px solid #000;
+  border-radius: 12px;
+  padding: 0 12px;
+  height: 52px;
+  margin-bottom: 16px;
+  background: white;
+}
+
+.search-box input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding-left: 8px;
+  font-size: 16px;
+  height: 100%;
+  background: transparent;
+}
+
+.clear-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: #777;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.icon-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 12px;
 }

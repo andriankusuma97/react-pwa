@@ -3,9 +3,8 @@ import AppRoutes from './routes';
 
 const router = createBrowserRouter(AppRoutes)
 
-function App() {
-
+function IndexRouter() {
   return <RouterProvider router={router}/>;
 }
 
-export default App
+export default IndexRouter
