@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Plus, Trash2, Wifi, WifiOff, Download } from 'lucide-react';
+import { usePWA } from './hooks/usePWA'
 
 const PWATodoApp = () => {
   const [todos, setTodos] = useState([]);
+  const { isOnline, isInstallable, installApp } = usePWA()
   const [newTodo, setNewTodo] = useState('');
-  const [isOnline, setIsOnline] = useState(navigator.onLine);
-  const [deferredPrompt, setDeferredPrompt] = useState(null);
-  const [showInstallButton, setShowInstallButton] = useState(false);
+ 
 
   // Load todos from localStorage on mount
   useEffect(() => {
@@ -21,35 +21,8 @@ const PWATodoApp = () => {
     localStorage.setItem('pwa-todos', JSON.stringify(todos));
   }, [todos]);
 
-  // Handle online/offline status
-  useEffect(() => {
-    const handleOnline = () => setIsOnline(true);
-    const handleOffline = () => setIsOnline(false);
-
-    window.addEventListener('online', handleOnline);
-    window.addEventListener('offline', handleOffline);
-
-    return () => {
-      window.removeEventListener('online', handleOnline);
-      window.removeEventListener('offline', handleOffline);
-    };
-  }, []);
-
   // Handle PWA installation
-  useEffect(() => {
-    const handleBeforeInstallPrompt = (e) => {
-      e.preventDefault();
-      setDeferredPrompt(e);
-      setShowInstallButton(true);
-    };
-
-    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-
-    return () => {
-      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-    };
-  }, []);
-
+  
   const addTodo = (e) => {
     e.preventDefault();
     if (newTodo.trim()) {
@@ -74,16 +47,7 @@ const PWATodoApp = () => {
     setTodos(todos.filter(todo => todo.id !== id));
   };
 
-  const installPWA = async () => {
-    if (deferredPrompt) {
-      deferredPrompt.prompt();
-      const { outcome } = await deferredPrompt.userChoice;
-      if (outcome === 'accepted') {
-        setShowInstallButton(false);
-      }
-      setDeferredPrompt(null);
-    }
-  };
+
 
   const completedCount = todos.filter(todo => todo.completed).length;
   const totalCount = todos.length;
@@ -107,9 +71,9 @@ const PWATodoApp = () => {
               </div>
               
               {/* Install Button */}
-              {showInstallButton && (
+              {installApp && (
                 <button
-                  onClick={installPWA}
+                  onClick={ installApp}
                   className="flex items-center space-x-1 bg-blue-500 text-white px-3 py-1 rounded-full text-xs hover:bg-blue-600 transition-colors"
                 >
                   <Download size={12} />
