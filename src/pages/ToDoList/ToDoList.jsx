@@ -4,14 +4,11 @@ import { usePWA } from '/src/hooks/usePWA';
 import { FiChevronLeft } from 'react-icons/fi';
 import {  useNavigate } from "react-router-dom";
 
-
-
 const PWATodoApp = () => {
   const [todos, setTodos] = useState([]);
   const [newTodo, setNewTodo] = useState('');
-  const { isOnline, isInstallable, installApp } = usePWA()  
+  const { isOnline} = usePWA()  
    const navigate = useNavigate();
-
   // Load todos from localStorage on mount
   useEffect(() => {
     const savedTodos = localStorage.getItem('pwa-todos');
@@ -25,19 +22,7 @@ const PWATodoApp = () => {
     localStorage.setItem('pwa-todos', JSON.stringify(todos));
   }, [todos]);
 
-  // Handle online/offline status
-  useEffect(() => {
-    const handleOnline = () => setIsOnline(true);
-    const handleOffline = () => setIsOnline(false);
-
-    window.addEventListener('online', handleOnline);
-    window.addEventListener('offline', handleOffline);
-
-    return () => {
-      window.removeEventListener('online', handleOnline);
-      window.removeEventListener('offline', handleOffline);
-    };
-  }, []);
+ 
 
   const addTodo = (e) => {
     e.preventDefault();
@@ -69,10 +54,10 @@ const PWATodoApp = () => {
   const totalCount = todos.length;
 
   return (
-    <div className="min-h-screen max-w-md mx-auto bg-gradient-to-br from-blue-50 to-indigo-100">
+    <div className="min-h-screen max-w-md mx-auto  bg-gradient-to-br from-blue-50 to-indigo-100 shadow-2xl">
       {/* Header */}
-      <header className="bg-sky-300 shadow-lg">
-        <div className="max-w-md mx-auto px-4 py-6">
+      <header className="bg-white shadow-lg">
+        <div className="mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
             <div className='flex items-center '>
               <FiChevronLeft size={24} className='mr-4' onClick={()=> navigate(-1)} />
@@ -89,17 +74,7 @@ const PWATodoApp = () => {
                 {isOnline ? <Wifi size={12} /> : <WifiOff size={12} />}
                 <span>{isOnline ? 'Online' : 'Offline'}</span>
               </div>
-              
-              {/* Install Button */}
-              {isInstallable && (
-                <button
-                  onClick={installApp}
-                  className="flex items-center space-x-1 bg-blue-500 text-white px-3 py-1 rounded-full text-xs hover:bg-blue-600 transition-colors"
-                >
-                  <Download size={12} />
-                  <span>Install</span>
-                </button>
-              )}
+             
             </div>
           </div>
           

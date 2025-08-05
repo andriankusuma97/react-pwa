@@ -22,7 +22,6 @@ function App() {
   const navigate = useNavigate();
   const { isOnline, isInstallable, installApp } = usePWA()
 
-
   const filteredItems = dataItems.filter((item) => {
     const matchesTab = activeTab === 'Semua' || item.type === activeTab;
     const matchesSearch = item.title.toLowerCase().includes(searchTerm.toLowerCase());
@@ -42,6 +41,41 @@ function App() {
       window.removeEventListener('offline', handleOffline);
     };
   }, []);
+
+  useEffect(() => {
+    // Cek apakah running di Alipay
+    const isAlipayEnv = navigator.userAgent.indexOf('AliApp') > -1;
+
+    if (isAlipayEnv && window.my) {
+      console.log('Running in Alipay Mini Program WebView');
+
+      // Setup message listener (terima pesan dari mini program)
+      window.addEventListener('message', (event) => {
+        console.log('Message from mini program:', event.data);
+      });
+    }
+  }, []);
+
+  const sendMessageToMiniProgram = () => {
+    if (window.my && window.my.postMessage) {
+      window.my.postMessage({
+        type: 'userAction',
+        data: 'Hello from React app'
+      });
+    }
+  };
+
+  const navigateInMiniProgram = () => {
+    if (window.my && window.my.navigateTo) {
+      window.my.navigateTo({
+        url: '/pages/gether/gether'
+      });
+      window.my.postMessage({
+        type: 'userAction',
+        data: 'Hello from React app'
+      });
+    }
+  };
 
   return (
     <div className="app">
@@ -63,7 +97,15 @@ function App() {
         </div>
       </header>
 
-
+      <div className="flex flex-col items-center gap-2 p-4">
+        <h1>My React App in Alipay WebView</h1>
+        <button className="bg-amber-200" onClick={sendMessageToMiniProgram}>
+          Send Message to Mini Program
+        </button>
+        <button className="bg-amber-200" onClick={navigateInMiniProgram}>
+          Navigate in Mini Program gether
+        </button>
+      </div>
       <div className="search-box">
         <FiSearch size={20} />
         <input
