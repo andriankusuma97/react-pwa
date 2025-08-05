@@ -98,14 +98,11 @@ function App() {
   const navigateInMiniProgram = () => {
     if (window.my && window.my.navigateTo) {
       window.my.navigateTo({
-        url: 'pages/gether/gether'
+        url: '/pages/gether/gether'
       });
-    }
-  };
-  const navigateInMiniProgramA = () => {
-    if (window.my && window.my.navigateTo) {
-      window.my.navigateTo({
-        url: '../gether/gether'
+       window.my.postMessage({
+        type: 'userAction',
+        data: 'Hello from React app'
       });
     }
   };
