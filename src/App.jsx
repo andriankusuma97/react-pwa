@@ -145,10 +145,7 @@ function App() {
             Send Message to Mini Program
           </button>
           <button className="bg-amber-200" onClick={navigateInMiniProgram}>
-            Navigate in Mini Program
-          </button>
-          <button className="bg-amber-200" onClick={navigateInMiniProgramA}>
-            Navigate in Mini Program2
+            Navigate in Mini Program gether
           </button>
         </div>
       <div className="search-box mx-auto">
