@@ -98,7 +98,14 @@ function App() {
   const navigateInMiniProgram = () => {
     if (window.my && window.my.navigateTo) {
       window.my.navigateTo({
-        url: 'pages/index/index'
+        url: 'pages/gether/gether'
+      });
+    }
+  };
+  const navigateInMiniProgramA = () => {
+    if (window.my && window.my.navigateTo) {
+      window.my.navigateTo({
+        url: '../gether/gether'
       });
     }
   };
@@ -142,6 +149,9 @@ function App() {
           </button>
           <button className="bg-amber-200" onClick={navigateInMiniProgram}>
             Navigate in Mini Program
+          </button>
+          <button className="bg-amber-200" onClick={navigateInMiniProgramA}>
+            Navigate in Mini Program2
           </button>
         </div>
       <div className="search-box mx-auto">
