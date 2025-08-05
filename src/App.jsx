@@ -1,12 +1,10 @@
 import './App.css';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import { FiSearch, FiX } from 'react-icons/fi';
 import iconScan from './assets/icon_scan.svg';
 import {  useNavigate } from "react-router-dom";
 import { usePWA } from '/src/hooks/usePWA';
 import { Plus, Trash2, Wifi, WifiOff, Download } from 'lucide-react';
-
-
 
 
 const dataItems = [
@@ -24,7 +22,30 @@ function App() {
   const [activeTab, setActiveTab] = useState('Semua');
   const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
-  const { isOnline, isInstallable, installApp } = usePWA()  
+  const { isOnline } = usePWA() 
+  const [installPrompt, setInstallPrompt] = useState(null)
+  const [isInstallable, setIsInstallable] = useState(false) 
+
+  useEffect(() => {
+  // Test apakah event listener terpasang
+  console.log('🔧 PWA Hook initialized')
+  
+  const handleBeforeInstallPrompt = (e) => {
+    console.log('🎯 beforeinstallprompt EVENT TRIGGERED!', e)
+    e.preventDefault()
+    setInstallPrompt(e)
+    setIsInstallable(true)
+  }
+
+  // Test apakah addEventListener berhasil
+  window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt)
+  console.log('✅ Event listener added for beforeinstallprompt')
+
+  return () => {
+    window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt)
+    console.log('🗑️ Event listener removed')
+  }
+}, [])
 
 
   const filteredItems = dataItems.filter((item) => {
@@ -32,6 +53,55 @@ function App() {
     const matchesSearch = item.title.toLowerCase().includes(searchTerm.toLowerCase());
     return matchesTab && matchesSearch;
   });
+
+  const installApp = async () => {
+    console.log(installPrompt,"<<<masuk");
+    
+    if (installPrompt) {
+
+      installPrompt.prompt()
+      const { outcome } = await installPrompt.userChoice
+      console.log("<<<done");
+      
+      if (outcome === 'accepted') {
+        console.log("download");
+        
+        setIsInstallable(false)
+      }
+      setInstallPrompt(null)
+    }
+  }
+
+  useEffect(() => {
+    // Cek apakah running di Alipay
+    const isAlipayEnv = navigator.userAgent.indexOf('AliApp') > -1;
+    
+    if (isAlipayEnv && window.my) {
+      console.log('Running in Alipay Mini Program WebView');
+      
+      // Setup message listener (terima pesan dari mini program)
+      window.addEventListener('message', (event) => {
+        console.log('Message from mini program:', event.data);
+      });
+    }
+  }, []);
+
+  const sendMessageToMiniProgram = () => {
+    if (window.my && window.my.postMessage) {
+      window.my.postMessage({
+        type: 'userAction',
+        data: 'Hello from React app'
+      });
+    }
+  };
+
+  const navigateInMiniProgram = () => {
+    if (window.my && window.my.navigateTo) {
+      window.my.navigateTo({
+        url: 'pages/index/index'
+      });
+    }
+  };
 
   return (
     <div className="app">
@@ -64,7 +134,16 @@ function App() {
         </div>
         
       </header>
-
+      
+        <div className="flex flex-col items-center gap-2 p-4">
+          <h1>My React App in Alipay WebView</h1>
+          <button className="bg-amber-200" onClick={sendMessageToMiniProgram}>
+            Send Message to Mini Program
+          </button>
+          <button className="bg-amber-200" onClick={navigateInMiniProgram}>
+            Navigate in Mini Program
+          </button>
+        </div>
       <div className="search-box mx-auto">
         <FiSearch size={20} />
         <input

@@ -6,12 +6,26 @@
     <link rel="icon" type="image/svg+xml/png" href="/icon-192.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Theme color -->
-    <meta name="theme-color" content="#000000">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- Android Chrome -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- Samsung Internet -->
+    <meta name="msapplication-navbutton-color" content="#ffffff">
     
     <!-- iOS specific -->
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#ffffff">
     <meta name="apple-mobile-web-app-title" content="MyPWA">
     <link rel="apple-touch-icon" href="/icon-192.png">
+
+     <!-- Load Alipay WebView Bridge -->
+    <script>
+      if (navigator.userAgent.indexOf('AliApp') > -1) {
+        document.writeln('<script src="https://appx/web-view.min.js"><\/script>');
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
